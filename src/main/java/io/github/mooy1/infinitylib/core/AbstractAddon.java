@@ -51,9 +51,22 @@ public abstract class AbstractAddon extends JavaPlugin implements SlimefunAddon 
      * Live Addon Constructor
      */
     public AbstractAddon(String githubUserName, String githubRepo, String autoUpdateBranch, String autoUpdateKey) {
-        boolean official = getDescription().getVersion().matches("DEV - \\d+ \\(git \\w+\\)");
-        this.updater = official ? new GitHubBuildsUpdater(this, getFile(),
-                githubUserName + "/" + githubRepo + "/" + autoUpdateBranch) : null;
+        // El autoactualizador queda desarmado a proposito en DrakesCraft.
+        //
+        // Estos addons son ports: se recompilaron contra el Slimefun repaquetado del servidor.
+        // El jar que hay en el GitHub de upstream esta compilado contra los paquetes originales,
+        // asi que si el actualizador se lo trajera encima, el addon dejaria de cargar -- y de paso
+        // se perderian los ajustes propios, como el nerf del generador de obsidiana.
+        //
+        // No basta con poner la clave de config a false: mas abajo, si la clave falta del config
+        // por defecto, el codigo marca `brokenConfig` y arranca el actualizador SIN mirar la
+        // configuracion. Falla hacia el lado peligroso. Hasta ahora lo unico que lo frenaba era
+        // que nuestras versiones no encajan con el patron "DEV - N (git X)", cosa que dejaria de
+        // ser cierta el dia que alguien cambie la cadena de version.
+        //
+        // Dejandolo a null aqui, las dos ramas de mas abajo comprueban `updater != null` y no
+        // hacen nada. La actualizacion se hace desplegando el jar por SFTP, como el resto.
+        this.updater = null;
         this.environment = Environment.LIVE;
         this.githubUserName = githubUserName;
         this.autoUpdateBranch = autoUpdateBranch;
