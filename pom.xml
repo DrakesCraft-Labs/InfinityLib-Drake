@@ -60,12 +60,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>2.2.1</version>
-            <scope>compile</scope>
-        </dependency>
+        
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -141,10 +136,7 @@
 
                 <configuration>
                     <relocations>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.mooy1.infinitylib.metrics</shadedPattern>
-                        </relocation>
+                        
                     </relocations>
                     <filters>
                         <filter>
